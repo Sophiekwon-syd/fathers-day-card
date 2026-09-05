@@ -15,6 +15,12 @@ let state = createCardState();
 let memoryPlayer = null;
 let animationTimer = null;
 
+function haptic(ms = 15) {
+  if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+    try { navigator.vibrate(ms); } catch {}
+  }
+}
+
 function focusWithoutScrolling(element) {
   if (!element || typeof element.focus !== 'function') return;
   try {
@@ -42,7 +48,7 @@ export function startInsideAnimation(root = (typeof document !== 'undefined' ? d
     const isReduced = typeof window !== 'undefined' &&
       window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
-    const duration = isReduced ? 150 : 3000;
+    const duration = isReduced ? 150 : 2800;
     clearTimeout(animationTimer);
     animationTimer = setTimeout(() => {
       resolve();
@@ -51,9 +57,14 @@ export function startInsideAnimation(root = (typeof document !== 'undefined' ? d
 }
 
 export function renderState(nextState, elements, { focus = true } = {}) {
-  const { main, cover, open, openRegion, strip, film, pause } = elements;
+  const { main, cover, open, openRegion, strip, film, pause, rightPanel } = elements;
   if (main?.dataset) main.dataset.view = nextState.view;
-  if (openRegion) openRegion.hidden = nextState.view === 'closed';
+  if (openRegion) {
+    openRegion.hidden = nextState.view === 'closed';
+    if (nextState.view === 'closed' && typeof openRegion.scrollTo === 'function') {
+      openRegion.scrollTo({ left: 0, behavior: 'instant' });
+    }
+  }
   if (open) open.hidden = nextState.view !== 'closed';
   if (cover) {
     cover.inert = nextState.view !== 'closed';
@@ -81,15 +92,25 @@ export function renderState(nextState, elements, { focus = true } = {}) {
   if (focus) {
     if (nextState.view === 'open') {
       startInsideAnimation().then(() => {
+        // On mobile, smoothly slide to the message panel after the animation
+        if (openRegion && rightPanel && window.innerWidth < 768) {
+          openRegion.scrollTo({ left: rightPanel.offsetLeft, behavior: 'smooth' });
+        }
         focusWithoutScrolling(elements.reveal);
       });
     } else {
+      if (['strip', 'film'].includes(nextState.view)) {
+        if (openRegion && rightPanel && window.innerWidth < 768) {
+          openRegion.scrollTo({ left: rightPanel.offsetLeft, behavior: 'auto' });
+        }
+      }
       focusWithoutScrolling(focusTarget(nextState, elements));
     }
   }
 }
 
 export function dispatch(event, elements = getElements()) {
+  haptic(15);
   const nextState = transition(state, event);
   const prevState = state;
   state = nextState;
@@ -111,11 +132,15 @@ export function dispatch(event, elements = getElements()) {
 
 export function getElements(root = (typeof document !== 'undefined' ? document : {})) {
   const q = (sel) => (typeof root.querySelector === 'function' ? root.querySelector(sel) : null);
+  const qa = (sel) => (typeof root.querySelectorAll === 'function' ? root.querySelectorAll(sel) : []);
   return {
     main: q('main'),
     cover: q('.card-cover'),
     open: q('.open-card'),
     openRegion: q('.open-card-region'),
+    leftPanel: q('.card-left'),
+    rightPanel: q('.card-right'),
+    dots: qa('.indicator-dot'),
     reveal: q('.reveal-strip'),
     strip: q('.memory-strip'),
     play: q('.play-film'),
@@ -187,12 +212,69 @@ export async function initialise(root = (typeof document !== 'undefined' ? docum
     if (state.view === 'film') dispatch(EVENTS.close, elements);
   });
 
+  // Mobile Touch Swipe Gesture on Cover (Swipe left to open)
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  elements.cover?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  elements.cover?.addEventListener('touchend', (e) => {
+    if (state.view !== 'closed') return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    // Swipe left by at least 40px
+    if (deltaX < -40 && Math.abs(deltaY) < 80) {
+      dispatch(EVENTS.open, elements);
+    }
+  }, { passive: true });
+
+  // Mobile inside scroll-snap panel indicator sync
+  if (elements.openRegion && elements.dots.length > 0) {
+    elements.openRegion.addEventListener('scroll', () => {
+      const scrollLeft = elements.openRegion.scrollLeft;
+      const width = elements.openRegion.clientWidth;
+      const activeIndex = Math.round(scrollLeft / width);
+      elements.dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIndex);
+      });
+    }, { passive: true });
+
+    elements.dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const panelIdx = parseInt(dot.dataset.panel, 10);
+        const target = panelIdx === 0 ? elements.leftPanel : elements.rightPanel;
+        if (target) {
+          elements.openRegion.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
   // Global keyboard shortcut: Escape closes film
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && state.view === 'film') {
       dispatch(EVENTS.close, elements);
     }
   });
+
+  // URL query parameter support for direct previewing (?view=open | strip | film)
+  if (typeof window !== 'undefined' && window.location?.search) {
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view');
+    if (viewParam === 'open') {
+      dispatch(EVENTS.open, elements);
+    } else if (viewParam === 'strip') {
+      dispatch(EVENTS.open, elements);
+      dispatch(EVENTS.reveal, elements);
+    } else if (viewParam === 'film') {
+      dispatch(EVENTS.open, elements);
+      dispatch(EVENTS.reveal, elements);
+      dispatch(EVENTS.play, elements);
+    }
+  }
 
   return {
     getState: () => state,

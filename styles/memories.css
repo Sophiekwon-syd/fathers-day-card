@@ -42,7 +42,14 @@
 
 main[data-view="strip"] .memory-strip,
 main[data-view="film"] .memory-strip {
-  transform: translateY(-70%);
+  transform: translateY(-56%);
+}
+
+@media (min-width: 768px) {
+  main[data-view="strip"] .memory-strip,
+  main[data-view="film"] .memory-strip {
+    transform: translateY(-70%);
+  }
 }
 
 .strip-graphic {

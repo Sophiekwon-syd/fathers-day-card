@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f3ecdc">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="description" content="A handmade Father's Day card for Dad.">
     <title>For Dad, with love</title>
     <link rel="stylesheet" href="styles/base.css">
@@ -16,6 +19,11 @@
         <article class="card-spread" aria-label="Father's Day card">
           <!-- Inside Spread (two panels: card-left and card-right) -->
           <section class="open-card-region" id="open-card" data-region="open-card" aria-label="Inside the card" hidden>
+            <nav class="panel-indicator" aria-label="Card panels">
+              <button type="button" class="indicator-dot active" aria-label="Baby and Dad stage" data-panel="0"></button>
+              <button type="button" class="indicator-dot" aria-label="Dad's message and memories" data-panel="1"></button>
+            </nav>
+
             <!-- Left panel: Baby to Dad character scene -->
             <div class="card-left" aria-label="Baby and Dad scene">
               <div class="character-stage">
@@ -30,6 +38,7 @@
                   </div>
                 </div>
               </div>
+              <span class="swipe-hint" aria-hidden="true">Swipe for message ›</span>
             </div>
 
             <!-- Right panel: Father's Day handwritten message, pocket, and memory strip -->
@@ -68,7 +77,10 @@
             </div>
             <p class="card-kicker">For the best Dad</p>
             <h1>I made this for you, Dad.</h1>
-            <button class="open-card" type="button">Open your card</button>
+            <button class="open-card" type="button">
+              <span>Open your card</span>
+              <span aria-hidden="true" class="arrow-icon">›</span>
+            </button>
           </section>
         </article>
       </div>

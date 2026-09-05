@@ -141,6 +141,12 @@ main:not([data-view="closed"]) .message-group-3 {
   animation: revealMessage 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) 2.6s forwards;
 }
 
+main[data-view="strip"] .message-group,
+main[data-view="film"] .message-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes revealMessage {
   0% {
     opacity: 0;
