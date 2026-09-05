@@ -6,46 +6,100 @@
     <meta name="description" content="A handmade Father's Day card for Dad.">
     <title>For Dad, with love</title>
     <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/card.css">
+    <link rel="stylesheet" href="styles/characters.css">
+    <link rel="stylesheet" href="styles/memories.css">
   </head>
   <body>
     <main data-view="closed">
       <div class="card-scene" aria-live="polite">
         <article class="card-spread" aria-label="Father's Day card">
+          <!-- Inside Spread (two panels: card-left and card-right) -->
+          <section class="open-card-region" id="open-card" data-region="open-card" aria-label="Inside the card" hidden>
+            <!-- Left panel: Baby to Dad character scene -->
+            <div class="card-left" aria-label="Baby and Dad scene">
+              <div class="character-stage">
+                <div class="portrait-container portrait--dad">
+                  <img src="assets/portraits/dad.webp" alt="Dad smiling" class="portrait-img">
+                </div>
+                <div class="portrait-container portrait--baby">
+                  <img src="assets/portraits/baby.webp" alt="Baby smiling" class="portrait-img">
+                  <div class="offered-carnation" aria-hidden="true">
+                    <img src="assets/craft/carnation-stem.webp" alt="" class="carnation-stem-img">
+                    <img src="assets/craft/carnation-petals.webp" alt="" class="carnation-petals-img">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right panel: Father's Day handwritten message, pocket, and memory strip -->
+            <div class="card-right" aria-label="Father's Day message and memories">
+              <div class="card-message">
+                <p class="message-group message-group-1">Happy Father’s Day to the most wonderful husband and dad.</p>
+                <p class="message-group message-group-2">Today is your day and you deserve to be celebrated!</p>
+                <p class="message-group message-group-3">We love you so much.</p>
+              </div>
+
+              <button class="reveal-strip" type="button">One more thing...</button>
+
+              <div class="pocket-wrapper">
+                <div class="card-pocket" aria-hidden="true">
+                  <img src="assets/craft/card-pocket.webp" alt="" class="pocket-img">
+                </div>
+                <section class="memory-strip" aria-label="Family memories" hidden>
+                  <div class="strip-graphic" aria-hidden="true">
+                    <img src="assets/craft/photo-strip.webp" alt="" class="strip-frame-img">
+                    <div class="strip-thumbnails">
+                      <img src="assets/media/photo-01.webp" alt="" class="strip-thumb">
+                      <img src="assets/media/photo-02.webp" alt="" class="strip-thumb">
+                      <img src="assets/media/photo-03.webp" alt="" class="strip-thumb">
+                    </div>
+                  </div>
+                  <button class="play-film" type="button">Play our memories</button>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <!-- Folding Front Cover -->
           <section class="card-cover" aria-label="Card cover">
+            <div class="cover-cutout-frame">
+              <img src="assets/portraits/baby.webp" alt="Baby smiling" class="cover-baby-img">
+            </div>
             <p class="card-kicker">For the best Dad</p>
             <h1>I made this for you, Dad.</h1>
             <button class="open-card" type="button">Open your card</button>
           </section>
-
-          <section class="open-card-region" id="open-card" data-region="open-card" aria-label="Inside the card" hidden>
-            <div class="card-message">
-              <p>Happy Father’s Day to the most wonderful husband and dad.</p>
-              <p>Today is your day and you deserve to be celebrated!</p>
-              <p>We love you so much.</p>
-            </div>
-            <button class="reveal-strip" type="button">One more thing...</button>
-
-            <section class="memory-strip" aria-label="Family memories" hidden>
-              <button class="play-film" type="button">Play our memories</button>
-            </section>
-          </section>
         </article>
       </div>
 
+      <!-- Memory Film Dialog -->
       <dialog class="memory-film" aria-label="Our family memories">
-        <div class="film-content">
+        <div class="film-container">
+          <div class="film-screen"></div>
           <p class="film-status" aria-live="polite">Our favourite memories are the ones with you.</p>
           <div class="film-controls" aria-label="Film controls">
             <button class="pause-film" type="button">Pause</button>
+            <button class="mute-film" type="button">Mute</button>
             <button class="replay-film" type="button">Replay</button>
             <button class="close-film" type="button">Return to card</button>
           </div>
         </div>
       </dialog>
     </main>
+
+    <!-- No JavaScript Fallback -->
     <noscript>
-      <p class="no-script-message">Happy Father’s Day to the most wonderful husband and dad. We love you so much.</p>
+      <div class="no-script-message">
+        <h1>Happy Father’s Day to the most wonderful husband and dad.</h1>
+        <p>Today is your day and you deserve to be celebrated!</p>
+        <p>We love you so much.</p>
+        <div class="no-script-gallery">
+          <img src="assets/media/photo-finale.webp" alt="Our family" style="max-width: 100%; border-radius: 8px;">
+        </div>
+      </div>
     </noscript>
+
     <script type="module" src="src/main.js"></script>
   </body>
 </html>
