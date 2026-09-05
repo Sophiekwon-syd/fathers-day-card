@@ -1,0 +1,174 @@
+:root {
+  color-scheme: light;
+  --paper: #f3ecdc;
+  --paper-deep: #e8dcc4;
+  --ink: #3e3a35;
+  --carnation: #b86164;
+  --carnation-deep: #913f4c;
+  --shadow: rgba(62, 58, 53, 0.18);
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(62, 58, 53, 0.06) 0.7px, transparent 0.7px);
+  background-size: 6px 6px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--carnation-deep);
+  outline-offset: 4px;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: clamp(1rem, 5vw, 4rem);
+}
+
+.card-scene {
+  width: min(100%, 34rem);
+  aspect-ratio: 4 / 5;
+  perspective: 1100px;
+}
+
+.card-spread {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card-cover,
+.open-card-region {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(1.5rem, 6vw, 4rem);
+  border: 1px solid rgba(62, 58, 53, 0.13);
+  border-radius: 0.2rem;
+  background: var(--paper-deep);
+  box-shadow: 0.5rem 0.75rem 1.5rem var(--shadow);
+}
+
+.card-cover h1 {
+  max-width: 12ch;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 500;
+}
+
+.card-kicker {
+  margin: 0;
+  color: var(--carnation-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.7rem;
+}
+
+.open-card,
+.reveal-strip,
+.play-film,
+.film-controls button {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.65rem 1.1rem;
+  background: rgba(255, 252, 242, 0.72);
+}
+
+.open-card {
+  justify-self: end;
+  align-self: end;
+  margin-top: 4rem;
+  color: var(--carnation-deep);
+}
+
+.card-message {
+  max-width: 30ch;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  text-align: center;
+}
+
+.card-message p {
+  margin: 0.85rem 0;
+}
+
+.memory-strip {
+  align-self: end;
+  min-height: 5rem;
+  padding: 1rem;
+  border: 1px solid rgba(62, 58, 53, 0.16);
+  background: rgba(255, 252, 242, 0.5);
+}
+
+.memory-film {
+  width: min(90vw, 56rem);
+  border: 1px solid rgba(62, 58, 53, 0.25);
+  padding: clamp(1.5rem, 6vw, 3rem);
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 1rem 3rem rgba(62, 58, 53, 0.3);
+}
+
+.memory-film::backdrop {
+  background: rgba(62, 58, 53, 0.62);
+}
+
+.film-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.film-status {
+  margin: 0;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+}
+
+.film-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.no-script-message {
+  max-width: 40rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.12s !important;
+    animation-duration: 0.12s !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .card-scene {
+    width: min(100%, 28rem);
+  }
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A handmade Father's Day card for Dad.">
+    <title>For Dad, with love</title>
+    <link rel="stylesheet" href="styles/base.css">
+  </head>
+  <body>
+    <main data-view="closed">
+      <div class="card-scene" aria-live="polite">
+        <article class="card-spread" aria-label="Father's Day card">
+          <section class="card-cover" aria-label="Card cover">
+            <p class="card-kicker">For the best Dad</p>
+            <h1>I made this for you, Dad.</h1>
+            <button class="open-card" type="button">Open your card</button>
+          </section>
+
+          <section class="open-card-region" id="open-card" data-region="open-card" aria-label="Inside the card" hidden>
+            <div class="card-message">
+              <p>Happy Father’s Day to the most wonderful husband and dad.</p>
+              <p>Today is your day and you deserve to be celebrated!</p>
+              <p>We love you so much.</p>
+            </div>
+            <button class="reveal-strip" type="button">One more thing...</button>
+
+            <section class="memory-strip" aria-label="Family memories" hidden>
+              <button class="play-film" type="button">Play our memories</button>
+            </section>
+          </section>
+        </article>
+      </div>
+
+      <dialog class="memory-film" aria-label="Our family memories">
+        <div class="film-content">
+          <p class="film-status" aria-live="polite">Our favourite memories are the ones with you.</p>
+          <div class="film-controls" aria-label="Film controls">
+            <button class="pause-film" type="button">Pause</button>
+            <button class="replay-film" type="button">Replay</button>
+            <button class="close-film" type="button">Return to card</button>
+          </div>
+        </div>
+      </dialog>
+    </main>
+    <noscript>
+      <p class="no-script-message">Happy Father’s Day to the most wonderful husband and dad. We love you so much.</p>
+    </noscript>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
