@@ -1,12 +1,17 @@
 :root {
   color-scheme: light;
-  --paper: #f3ecdc;
-  --paper-deep: #e8dcc4;
-  --ink: #3e3a35;
+  --paper: #f4ecde;
+  --paper-deep: #eae0cb;
+  --ink: #322b27;
+  --ink-soft: #635852;
   --carnation: #b86164;
-  --carnation-deep: #913f4c;
+  --carnation-deep: #8f3844;
+  --carnation-light: #fbebee;
   --shadow: rgba(62, 58, 53, 0.18);
-  font-family: Georgia, 'Times New Roman', serif;
+  --font-display: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+  --font-handwriting: 'Patrick Hand', 'Quicksand', cursive;
+  --font-body: 'Quicksand', system-ui, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
 }
 
@@ -20,26 +25,33 @@ body {
   margin: 0;
   color: var(--ink);
   background-color: var(--paper);
-  background-image: radial-gradient(rgba(62, 58, 53, 0.06) 0.7px, transparent 0.7px);
-  background-size: 6px 6px;
+  background-image: url('../assets/craft/paper-background.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
 
 button {
-  font: inherit;
+  font-family: var(--font-display);
   color: inherit;
   cursor: pointer;
 }
 
 button:focus-visible {
   outline: 3px solid var(--carnation-deep);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 main {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  padding: clamp(1rem, 5vw, 4rem);
+  min-height: 100dvh;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  box-sizing: border-box;
 }
 
 .card-scene {

@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="description" content="A handmade Father's Day card for Dad.">
     <title>For Dad, with love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/card.css">
     <link rel="stylesheet" href="styles/characters.css">
@@ -44,9 +47,13 @@
             <!-- Right panel: Father's Day handwritten message, pocket, and memory strip -->
             <div class="card-right" aria-label="Father's Day message and memories">
               <div class="card-message">
-                <p class="message-group message-group-1">Happy Father’s Day to the most wonderful husband and dad.</p>
-                <p class="message-group message-group-2">Today is your day and you deserve to be celebrated!</p>
-                <p class="message-group message-group-3">We love you so much.</p>
+                <p class="message-salutation">My love, Happy Father’s Day!</p>
+                <p class="message-para">This is your first Father’s Day as a dad of two, and I hope you know just how special you are to our family.</p>
+                <p class="message-para">From our lovely Aria to our adorable Edwin, you are one very lucky dad to have the most precious treasures in the world.</p>
+                <p class="message-para">Even though we often have to navigate everything on our own without much help from others, I’m incredibly grateful that Edwin is growing stronger every day and that both our children are happy and healthy.</p>
+                <p class="message-para">None of this would be possible without you—our family’s hero and my one and only love in the whole universe. Our family simply wouldn’t be complete without you.</p>
+                <p class="message-para">Let’s grow old together and continue filling our lives with love, laughter, and fun. You truly are the best dad—one our children will always love, admire, and respect.</p>
+                <p class="message-closing">We love you so much. Happy Father’s Day!</p>
               </div>
 
               <button class="reveal-strip" type="button">One more thing...</button>
@@ -88,11 +95,12 @@
       <!-- Memory Film Dialog -->
       <dialog class="memory-film" aria-label="Our family memories">
         <div class="film-container">
+          <div class="film-story-bars" aria-hidden="true"></div>
           <div class="film-screen"></div>
           <p class="film-status" aria-live="polite">Our favourite memories are the ones with you.</p>
           <div class="film-controls" aria-label="Film controls">
             <button class="pause-film" type="button">Pause</button>
-            <button class="mute-film" type="button">Mute</button>
+            <button class="mute-film" type="button">Sound</button>
             <button class="replay-film" type="button">Replay</button>
             <button class="close-film" type="button">Return to card</button>
           </div>
@@ -103,9 +111,10 @@
     <!-- No JavaScript Fallback -->
     <noscript>
       <div class="no-script-message">
-        <h1>Happy Father’s Day to the most wonderful husband and dad.</h1>
-        <p>Today is your day and you deserve to be celebrated!</p>
-        <p>We love you so much.</p>
+        <h1>My love, Happy Father’s Day!</h1>
+        <p>This is your first Father’s Day as a dad of two, and I hope you know just how special you are to our family.</p>
+        <p>From our lovely Aria to our adorable Edwin, you are one very lucky dad to have the most precious treasures in the world.</p>
+        <p>We love you so much. Happy Father’s Day!</p>
         <div class="no-script-gallery">
           <img src="assets/media/photo-finale.webp" alt="Our family" style="max-width: 100%; border-radius: 8px;">
         </div>

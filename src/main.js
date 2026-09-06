@@ -151,6 +151,7 @@ export function getElements(root = (typeof document !== 'undefined' ? document :
     film: q('dialog[aria-label="Our family memories"]'),
     screen: q('.film-screen'),
     status: q('.film-status'),
+    storyBars: q('.film-story-bars'),
   };
 }
 
@@ -174,6 +175,15 @@ export async function initialise(root = (typeof document !== 'undefined' ? docum
 
   // Initialise memory player with manifest
   const manifest = await loadManifest();
+  if (elements.storyBars && manifest.length > 0) {
+    elements.storyBars.innerHTML = '';
+    manifest.forEach((_, idx) => {
+      const seg = document.createElement('div');
+      seg.className = idx === 0 ? 'story-segment active' : 'story-segment';
+      elements.storyBars.appendChild(seg);
+    });
+  }
+
   if (elements.screen && manifest.length > 0) {
     memoryPlayer = createMemoryPlayer({
       container: elements.screen,
@@ -181,9 +191,17 @@ export async function initialise(root = (typeof document !== 'undefined' ? docum
       onEnd: () => {
         dispatch(EVENTS.end, elements);
       },
-      onStatusChange: (item) => {
+      onStatusChange: (item, index) => {
         if (elements.status && item.caption) {
           elements.status.textContent = item.caption;
+        }
+        if (elements.storyBars) {
+          const segs = elements.storyBars.children;
+          for (let i = 0; i < segs.length; i++) {
+            if (i < index) segs[i].className = 'story-segment completed';
+            else if (i === index) segs[i].className = 'story-segment active';
+            else segs[i].className = 'story-segment';
+          }
         }
       },
     });
@@ -198,10 +216,18 @@ export async function initialise(root = (typeof document !== 'undefined' ? docum
   elements.mute?.addEventListener('click', () => {
     if (memoryPlayer) {
       const isMuted = memoryPlayer.toggleMute();
-      if (elements.mute) elements.mute.textContent = isMuted ? 'Unmute' : 'Mute';
+      if (elements.mute) elements.mute.textContent = isMuted ? 'Muted' : 'Sound';
     }
   });
-  elements.replay?.addEventListener('click', () => dispatch(EVENTS.replay, elements));
+  elements.replay?.addEventListener('click', () => {
+    if (elements.storyBars) {
+      const segs = elements.storyBars.children;
+      for (let i = 0; i < segs.length; i++) {
+        segs[i].className = i === 0 ? 'story-segment active' : 'story-segment';
+      }
+    }
+    dispatch(EVENTS.replay, elements);
+  });
   elements.close?.addEventListener('click', () => dispatch(EVENTS.close, elements));
 
   elements.film.addEventListener('cancel', (event) => {
