@@ -25,9 +25,9 @@
 
 /* Dad: positioned on the right of the left panel */
 .portrait--dad {
-  right: clamp(4%, 6vw, 12%);
+  right: clamp(2%, 3.5vw, 6%);
   bottom: clamp(16%, 20%, 25%);
-  width: clamp(125px, 25vw, 185px);
+  width: clamp(120px, 24vw, 175px);
   z-index: 2;
   opacity: 0;
   transform: translateY(12px) scale(0.96);
@@ -39,37 +39,34 @@ main:not([data-view="closed"]) .portrait--dad {
   transform: translateY(0) scale(1);
 }
 
-/* Baby: enters from left, moves to Dad, raises carnation */
+/* Two Kids (Aria & Edwin): enters from left, moves to Dad, raises carnation */
 .portrait--baby {
-  left: clamp(2%, 4vw, 8%);
-  bottom: clamp(14%, 17%, 22%);
-  width: clamp(105px, 21vw, 155px);
+  left: clamp(2%, 3.5vw, 5%);
+  bottom: clamp(14%, 18%, 23%);
+  width: clamp(130px, 26vw, 185px);
   z-index: 3;
   opacity: 0;
-  transform: translateX(-100px) rotate(-6deg);
+  transform: translateX(-80px) rotate(-4deg);
 }
 
 main:not([data-view="closed"]) .portrait--baby {
-  animation: babyEnters 2.8s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+  animation: babyEnters 2.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
 }
 
 @keyframes babyEnters {
   0% {
     opacity: 0;
-    transform: translateX(-80px) rotate(-8deg);
+    transform: translateX(-70px) rotate(-5deg);
   }
   30% {
     opacity: 1;
   }
-  65% {
-    transform: translateX(clamp(40px, 9vw, 85px)) rotate(2deg);
-  }
-  85% {
-    transform: translateX(clamp(35px, 8vw, 75px)) rotate(-1deg);
+  70% {
+    transform: translateX(clamp(16px, 3.5vw, 32px)) rotate(2deg);
   }
   100% {
     opacity: 1;
-    transform: translateX(clamp(38px, 8.5vw, 80px)) rotate(0deg);
+    transform: translateX(clamp(14px, 3vw, 26px)) rotate(0deg);
   }
 }
 

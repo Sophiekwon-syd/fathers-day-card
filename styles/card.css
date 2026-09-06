@@ -213,6 +213,10 @@ main:not([data-view="closed"]) .card-cover {
   inset: 0;
   width: 100%;
   height: 100%;
+  padding: 0;
+  gap: 0;
+  border: none;
+  box-shadow: none;
   border-radius: 8px;
   overflow: hidden;
   z-index: 2;
@@ -239,6 +243,8 @@ main:not([data-view="closed"]) .card-cover {
 .card-right {
   flex: 0 0 100%;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   height: 100%;
   scroll-snap-align: start;
   position: relative;

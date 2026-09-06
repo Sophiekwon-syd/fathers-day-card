@@ -32,7 +32,7 @@ function focusWithoutScrolling(element) {
 
 function focusTarget(nextState, elements) {
   if (nextState.view === 'closed') return elements.open;
-  if (nextState.view === 'open') return elements.reveal;
+  if (nextState.view === 'open') return elements.dots?.[0] || elements.openRegion;
   if (nextState.view === 'strip') return elements.play;
   if (nextState.filmStatus === 'paused') return elements.pause;
   if (nextState.filmStatus === 'ended') return elements.replay;
@@ -91,12 +91,17 @@ export function renderState(nextState, elements, { focus = true } = {}) {
 
   if (focus) {
     if (nextState.view === 'open') {
+      if (openRegion && typeof openRegion.scrollTo === 'function') {
+        openRegion.scrollTo({ left: 0, behavior: 'instant' });
+      }
       startInsideAnimation().then(() => {
         // On mobile, smoothly slide to the message panel after the animation
         if (openRegion && rightPanel && window.innerWidth < 768) {
           openRegion.scrollTo({ left: rightPanel.offsetLeft, behavior: 'smooth' });
+          setTimeout(() => focusWithoutScrolling(elements.reveal), 400);
+        } else {
+          focusWithoutScrolling(elements.reveal);
         }
-        focusWithoutScrolling(elements.reveal);
       });
     } else {
       if (['strip', 'film'].includes(nextState.view)) {
